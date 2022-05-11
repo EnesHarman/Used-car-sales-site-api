@@ -53,7 +53,7 @@ public class Vehicle {
 
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private Customer customer;
+    private Customer owner;
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private List<Picture> pictures;
