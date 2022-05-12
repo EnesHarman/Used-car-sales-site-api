@@ -1,4 +1,4 @@
-package com.sahibinden.arac.dto;
+package com.sahibinden.arac.dto.requests;
 
 import com.sahibinden.arac.model.*;
 import lombok.Builder;

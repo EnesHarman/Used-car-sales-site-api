@@ -1,7 +1,7 @@
 package com.sahibinden.arac.controller;
 
 import com.sahibinden.arac.core.result.Result;
-import com.sahibinden.arac.dto.CustomerRegisterRequest;
+import com.sahibinden.arac.dto.requests.CustomerRegisterRequest;
 import com.sahibinden.arac.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

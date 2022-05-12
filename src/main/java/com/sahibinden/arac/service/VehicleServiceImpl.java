@@ -1,18 +1,21 @@
 package com.sahibinden.arac.service;
 
-import com.sahibinden.arac.core.result.Result;
-import com.sahibinden.arac.core.result.SuccessResult;
-import com.sahibinden.arac.dto.VehicleAddRequest;
+import com.sahibinden.arac.core.result.*;
+import com.sahibinden.arac.dto.requests.VehicleAddRequest;
+import com.sahibinden.arac.dto.responses.VehicleListResponse;
 import com.sahibinden.arac.model.*;
 import com.sahibinden.arac.repository.VehicleRepository;
 import com.sahibinden.arac.service.constants.Messages;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class VehicleServiceImpl implements VehicleService{
+public class VehicleServiceImpl implements VehicleService {
 
     private VehicleRepository vehicleRepository;
     private AppUserService appUserService;
@@ -49,5 +52,27 @@ public class VehicleServiceImpl implements VehicleService{
         this.pictureService.addPictures(pictures, vehicle.getVehicleId());
 
         return new SuccessResult(Messages.VEHICLE_ADDED);
+    }
+
+    @Override
+    public DataResult<List<VehicleListResponse>> listVehicles(Optional<Integer> pageNum, Optional<Integer> pageSize) {
+        int pagenum = pageNum.isPresent() && pageNum.get() > 0 ? pageNum.get() : 1;
+        int pagesize = pageSize.isPresent() && pageSize.get() > 5 && pageSize.get() < 20 ? pageSize.get() : 10;
+        Pageable pageable = PageRequest.of(pagenum - 1, pagesize);
+        List<VehicleListResponse> vehicleList = this.vehicleRepository.listVehicles(pageable);
+        vehicleList.stream().forEach(vehicle->{
+            vehicle.setPictures(this.pictureService.getVehiclePictures(vehicle.getVehicleId()).getData());
+        });
+        return new SuccessDataResult<List<VehicleListResponse>>(vehicleList);
+    }
+
+    @Override
+    public DataResult<VehicleListResponse> listSingleVehicle(Optional<Long> id) {
+        if(!id.isPresent()){
+            return new ErrorDataResult<>(Messages.VEHICLE_NOT_FOUND);
+        }
+        VehicleListResponse vehicle = this.vehicleRepository.getSingleVehicle(id.get());
+        vehicle.setPictures(this.pictureService.getVehiclePictures(id.get()).getData());
+        return new SuccessDataResult<>(vehicle);
     }
 }
