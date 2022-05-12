@@ -16,10 +16,13 @@ import java.time.LocalDateTime;
 public class AuthServiceImpl implements AuthService {
     private AppUserService appUserService;
     private CustomerService customerService;
+    private RoleService roleService;
 
-    public AuthServiceImpl(AppUserService appUserService, CustomerService customerService) {
+
+    public AuthServiceImpl(AppUserService appUserService, CustomerService customerService, RoleService roleService) {
         this.appUserService = appUserService;
         this.customerService = customerService;
+        this.roleService = roleService;
     }
 
     @Override

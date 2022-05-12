@@ -21,7 +21,7 @@ public class AppUser {
     @Column(name = "id")
     private long appUserId;
 
-    @Column(name = "email", columnDefinition = "nvarchar(100)")
+    @Column(name = "email", columnDefinition = "nvarchar(100)", unique = true)
     private String appUserEmail;
 
     @Column(name = "password", columnDefinition = "nvarchar(255)")
