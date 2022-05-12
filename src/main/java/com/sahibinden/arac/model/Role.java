@@ -27,4 +27,13 @@ public class Role {
 
     @OneToMany(mappedBy = "role")
     private List<AppUser> users;
+
+    public Role(long roleId) {
+        this.roleId = roleId;
+    }
+
+    public Role(long roleId, String roleName) {
+        this.roleId = roleId;
+        this.roleName = roleName;
+    }
 }
