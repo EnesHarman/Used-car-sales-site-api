@@ -2,7 +2,7 @@ package com.sahibinden.arac.service;
 
 import com.sahibinden.arac.core.result.Result;
 import com.sahibinden.arac.core.result.SuccessResult;
-import com.sahibinden.arac.dto.CustomerRegisterRequest;
+import com.sahibinden.arac.dto.requests.CustomerRegisterRequest;
 import com.sahibinden.arac.model.AppUser;
 import com.sahibinden.arac.model.Customer;
 import com.sahibinden.arac.model.Role;

@@ -2,11 +2,13 @@ package com.sahibinden.arac.controller;
 
 import com.sahibinden.arac.core.result.DataResult;
 import com.sahibinden.arac.core.result.Result;
-import com.sahibinden.arac.dto.VehicleAddRequest;
+import com.sahibinden.arac.dto.requests.VehicleAddRequest;
+import com.sahibinden.arac.dto.responses.VehicleListResponse;
 import com.sahibinden.arac.service.VehicleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -26,5 +28,24 @@ public class VehicleController {
         }
         return ResponseEntity.badRequest().body(result.getMessage());
     }
+
+    @GetMapping("/list")
+    public ResponseEntity<Object> listVehicle(@PathVariable Optional<Long> id, @RequestParam Optional<Integer> pagaNum, Optional<Integer> pageSize){
+        System.out.println(id);
+        DataResult<List<VehicleListResponse>> result = this.vehicleService.listVehicles(pagaNum,pageSize);
+        if(result.getSuccess()){
+            return ResponseEntity.ok(result.getData());
+        }
+        return ResponseEntity.internalServerError().body(result.getMessage());
+    }
+    @GetMapping("/list/{id}")
+    public ResponseEntity<Object> listSingleVehicle(@PathVariable Optional<Long> id){
+        DataResult<VehicleListResponse> result = this.vehicleService.listSingleVehicle(id);
+        if(result.getSuccess()){
+            return ResponseEntity.ok(result.getData());
+        }
+        return ResponseEntity.internalServerError().body(result.getMessage());
+    }
+
 
 }

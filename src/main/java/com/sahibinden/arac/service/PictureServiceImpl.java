@@ -1,6 +1,8 @@
 package com.sahibinden.arac.service;
 
+import com.sahibinden.arac.core.result.DataResult;
 import com.sahibinden.arac.core.result.Result;
+import com.sahibinden.arac.core.result.SuccessDataResult;
 import com.sahibinden.arac.core.result.SuccessResult;
 import com.sahibinden.arac.model.Picture;
 import com.sahibinden.arac.model.Vehicle;
@@ -23,5 +25,10 @@ public class PictureServiceImpl implements PictureService{
             this.pictureRepository.save(picture);
         });
         return new SuccessResult();
+    }
+
+    @Override
+    public DataResult<List<Picture>> getVehiclePictures(long vehicleId) {
+        return new SuccessDataResult<>(this.pictureRepository.findAllByVehicle_VehicleId(vehicleId));
     }
 }
