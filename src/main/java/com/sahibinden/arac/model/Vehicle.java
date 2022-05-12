@@ -1,9 +1,6 @@
 package com.sahibinden.arac.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -68,4 +65,8 @@ public class Vehicle {
 
     @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public Vehicle(long vehicleId) {
+        this.vehicleId = vehicleId;
+    }
 }

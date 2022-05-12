@@ -42,4 +42,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
     private List<Comment> comments;
 
+    public Customer(long customerId) {
+        this.customerId = customerId;
+    }
 }

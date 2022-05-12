@@ -28,6 +28,10 @@ public class VehicleType {
     @OneToMany(mappedBy = "type")
     private List<Vehicle> vehicles;
 
+    public VehicleType(long vehicleTypeId) {
+        this.vehicleTypeId = vehicleTypeId;
+    }
+
     public VehicleType(long vehicleTypeId, String vehicleTypeName) {
         this.vehicleTypeId = vehicleTypeId;
         this.vehicleTypeName = vehicleTypeName;

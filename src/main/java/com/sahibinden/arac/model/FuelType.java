@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Table(name = "fuel_types")
 @Builder
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler","vehicles"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "vehicles"})
 public class FuelType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,10 @@ public class FuelType {
 
     @OneToMany(mappedBy = "fuelType")
     private List<Vehicle> vehicles;
+
+    public FuelType(long fuelTypeId) {
+        this.fuelTypeId = fuelTypeId;
+    }
 
     public FuelType(long fuelTypeId, String fuelTypeName) {
         this.fuelTypeId = fuelTypeId;

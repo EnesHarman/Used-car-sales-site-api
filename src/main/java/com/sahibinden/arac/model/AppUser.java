@@ -43,4 +43,7 @@ public class AppUser {
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
     private Manager manager;
 
+    public AppUser(long appUserId) {
+        this.appUserId = appUserId;
+    }
 }
