@@ -43,4 +43,9 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
         this.appUserRepository.save(appUser);
         return new SuccessResult();
     }
+
+    @Override
+    public long getAppUserIdByEmail(String email) {
+        return this.appUserRepository.findByAppUserEmail(email).getCustomer().getCustomerId();
+    }
 }
