@@ -23,8 +23,13 @@ public class VehicleType {
     private long vehicleTypeId;
 
     @Column(name = "name", columnDefinition = "varchar(30)")
-    private long vehicleTypeName;
+    private String vehicleTypeName;
 
     @OneToMany(mappedBy = "type")
     private List<Vehicle> vehicles;
+
+    public VehicleType(long vehicleTypeId, String vehicleTypeName) {
+        this.vehicleTypeId = vehicleTypeId;
+        this.vehicleTypeName = vehicleTypeName;
+    }
 }

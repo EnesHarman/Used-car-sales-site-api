@@ -23,8 +23,13 @@ public class FuelType {
     private long fuelTypeId;
 
     @Column(name = "name", columnDefinition = "varchar(30)")
-    private long fuelTypeName;
+    private String fuelTypeName;
 
     @OneToMany(mappedBy = "fuelType")
     private List<Vehicle> vehicles;
+
+    public FuelType(long fuelTypeId, String fuelTypeName) {
+        this.fuelTypeId = fuelTypeId;
+        this.fuelTypeName = fuelTypeName;
+    }
 }
