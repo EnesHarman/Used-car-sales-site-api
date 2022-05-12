@@ -28,12 +28,13 @@ public class AppUserServiceImpl implements AppUserService, UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         AppUser appUser = this.appUserRepository.findByAppUserEmail(email);
-        if(appUser==null){
-            throw  new UsernameNotFoundException("User not found."); //TODO GÜZELLEŞTİR
+        if (appUser == null) {
+            throw new UsernameNotFoundException("User not found."); //TODO GÜZELLEŞTİR
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(appUser.getRole().getRoleName()));
-        return new User(appUser.getAppUserEmail(),appUser.getAppUserPassword(),authorities);
+
+        return new User(appUser.getAppUserEmail(), appUser.getAppUserPassword(), authorities);
     }
 
     @Override

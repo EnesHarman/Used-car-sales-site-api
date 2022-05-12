@@ -53,7 +53,7 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
         Map<String,String> headerValues = new HashMap<String,String>();
         headerValues.put("access_token", access_token);
-        headerValues.put("role",user.getAuthorities().contains(new SimpleGrantedAuthority("CLAIM_CREATE_POST"))?"Author": "Reader");
+        headerValues.put("role",user.getAuthorities().stream().findFirst().get().getAuthority());
         response.setContentType("application/json");
         response.getOutputStream().print(new ObjectMapper().writeValueAsString(headerValues));
     }
