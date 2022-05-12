@@ -1,5 +1,8 @@
 package com.sahibinden.arac;
 
+import com.sahibinden.arac.model.Role;
+import com.sahibinden.arac.service.RoleService;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -29,5 +32,14 @@ public class AracApplication {
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.sahibinden.arac"))
 				.build();
+	}
+
+	@Bean
+	CommandLineRunner run(RoleService roleService) {
+		return args->{
+			roleService.addRole(new Role(1,"ROLE_ADMIN"));
+			roleService.addRole(new Role(2,"ROLE_MANAGER"));
+			roleService.addRole(new Role(3,"ROLE_CUSTOMER"));
+		};
 	}
 }
