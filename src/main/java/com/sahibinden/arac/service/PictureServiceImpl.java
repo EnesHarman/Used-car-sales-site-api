@@ -31,4 +31,13 @@ public class PictureServiceImpl implements PictureService{
     public DataResult<List<Picture>> getVehiclePictures(long vehicleId) {
         return new SuccessDataResult<>(this.pictureRepository.findAllByVehicle_VehicleId(vehicleId));
     }
+
+    @Override
+    public Result updateVehiclePictures(long vehicleId, List<Picture> pictures) {
+        pictures.stream().forEach(picture -> {
+            picture.setVehicle(new Vehicle(vehicleId));
+        });
+        this.pictureRepository.saveAll(pictures);
+        return new SuccessResult();
+    }
 }

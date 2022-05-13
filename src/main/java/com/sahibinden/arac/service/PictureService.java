@@ -9,4 +9,5 @@ import java.util.List;
 public interface PictureService {
     Result addPictures(List<Picture> picture, long vehicleId);
     DataResult<List<Picture>> getVehiclePictures(long vehicleId);
+    Result updateVehiclePictures(long vehicleId, List<Picture> pictures);
 }
