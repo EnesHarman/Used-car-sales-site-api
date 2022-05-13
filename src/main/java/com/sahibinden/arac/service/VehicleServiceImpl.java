@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -60,7 +61,7 @@ public class VehicleServiceImpl implements VehicleService {
         int pagesize = pageSize.isPresent() && pageSize.get() > 5 && pageSize.get() < 20 ? pageSize.get() : 10;
         Pageable pageable = PageRequest.of(pagenum - 1, pagesize);
         List<VehicleListResponse> vehicleList = this.vehicleRepository.listVehicles(pageable);
-        vehicleList.stream().forEach(vehicle->{
+        vehicleList.stream().forEach(vehicle -> {
             vehicle.setPictures(this.pictureService.getVehiclePictures(vehicle.getVehicleId()).getData());
         });
         return new SuccessDataResult<List<VehicleListResponse>>(vehicleList);
@@ -68,11 +69,42 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public DataResult<VehicleListResponse> listSingleVehicle(Optional<Long> id) {
-        if(!id.isPresent()){
+        if (!id.isPresent()) {
             return new ErrorDataResult<>(Messages.VEHICLE_NOT_FOUND);
         }
         VehicleListResponse vehicle = this.vehicleRepository.getSingleVehicle(id.get());
         vehicle.setPictures(this.pictureService.getVehiclePictures(id.get()).getData());
         return new SuccessDataResult<>(vehicle);
+    }
+
+    @Override
+    @Transactional
+    public Result updateVehicle(Optional<Long> id, VehicleAddRequest vehicleUpdateRequest) {
+        if (!id.isPresent()) {
+            return new ErrorResult(Messages.VEHICLE_NOT_FOUND);
+        }
+        long ownerId = appUserService.getAppUserIdByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+        Vehicle vehicle = this.vehicleRepository.getById(id.get());
+        if (vehicle.getOwner().getCustomerId() != ownerId) {
+            return new ErrorResult(Messages.NOT_AUTHORIZED_ACTION);
+        }
+        this.pictureService.updateVehiclePictures(vehicle.getVehicleId(), vehicleUpdateRequest.getPictures());
+
+        vehicle.setVehicleBrand(vehicleUpdateRequest.getVehicleBrand());
+        vehicle.setVehicleEngine(vehicleUpdateRequest.getVehicleEngine());
+        vehicle.setVehicleModel(vehicleUpdateRequest.getVehicleModel());
+        vehicle.setVehicleYear(vehicleUpdateRequest.getVehicleYear());
+        vehicle.setCentralLocking(vehicleUpdateRequest.isCentralLocking());
+        vehicle.setKilometer(vehicleUpdateRequest.getKilometer());
+        vehicle.setFogLight(vehicleUpdateRequest.isFogLight());
+        vehicle.setFoldableMirror(vehicleUpdateRequest.isFoldableMirror());
+        vehicle.setParkingSensor(vehicleUpdateRequest.isParkingSensor());
+        vehicle.setGlassCelling(vehicleUpdateRequest.isGlassCelling());
+        vehicle.setType(new VehicleType(vehicleUpdateRequest.getTypeId()));
+        vehicle.setFuelType(new FuelType(vehicleUpdateRequest.getFuelTypeId()));
+
+        this.vehicleRepository.save(vehicle);
+        return new SuccessResult(Messages.VEHICLE_UPDATED);
     }
 }

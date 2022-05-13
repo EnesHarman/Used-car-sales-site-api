@@ -12,4 +12,6 @@ public interface VehicleService {
     Result addVehicle(VehicleAddRequest vehicleAddRequest);
     DataResult<List<VehicleListResponse>> listVehicles(Optional<Integer> pageNum, Optional<Integer> pageSize);
     DataResult<VehicleListResponse> listSingleVehicle(Optional<Long> id);
+
+    Result updateVehicle(Optional<Long> id, VehicleAddRequest vehicleUpdateRequest);
 }

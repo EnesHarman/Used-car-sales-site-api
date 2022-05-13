@@ -47,5 +47,14 @@ public class VehicleController {
         return ResponseEntity.internalServerError().body(result.getMessage());
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> updateVehicle(@PathVariable Optional<Long> id,  @RequestBody VehicleAddRequest vehicleUpdateRequest){
+        Result result = this.vehicleService.updateVehicle(id, vehicleUpdateRequest);
+        if(result.getSuccess()){
+            return ResponseEntity.ok(result.getMessage());
+        }
+        return ResponseEntity.internalServerError().body(result.getMessage());
+    }
+
 
 }
