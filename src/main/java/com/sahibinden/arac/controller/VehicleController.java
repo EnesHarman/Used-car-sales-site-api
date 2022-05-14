@@ -66,6 +66,15 @@ public class VehicleController {
         return ResponseEntity.internalServerError().body(result.getMessage());
     }
 
+    @PutMapping("/unpublish/{id}")
+    public ResponseEntity<String> unPublishVehicle(@PathVariable long id) {
+        Result result = this.vehicleService.unPublishVehicle(id);
+        if (result.getSuccess()) {
+            return ResponseEntity.ok(result.getMessage());
+        }
+        return ResponseEntity.internalServerError().body(result.getMessage());
+    }
+
     @GetMapping("unpublished/list")
     public ResponseEntity<Object> listUnPublishedVehicles(@RequestParam Optional<Integer> pagaNum, Optional<Integer> pageSize) {
         DataResult<List<VehicleListResponse>> result = this.vehicleService.listUnPublishedVehicles(pagaNum, pageSize);

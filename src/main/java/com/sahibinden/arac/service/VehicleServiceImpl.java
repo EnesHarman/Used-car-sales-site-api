@@ -121,6 +121,9 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional
     public Result publishVehicle(long id) {
         Vehicle vehicle = this.vehicleRepository.getById(id);
+        if(vehicle.isPublished()){
+            return new ErrorResult(Messages.PUBLISHED_ALREADY);
+        }
         vehicle.setPublished(true);
         this.vehicleRepository.save(vehicle);
         return new SuccessResult(Messages.VEHICLE_PUBLISHED);
@@ -136,5 +139,21 @@ public class VehicleServiceImpl implements VehicleService {
             vehicle.setPictures(this.pictureService.getVehiclePictures(vehicle.getVehicleId()).getData());
         });
         return new SuccessDataResult<List<VehicleListResponse>>(vehicleList);
+    }
+
+    @Override
+    @Transactional
+    public Result unPublishVehicle(long id) {
+        long ownerId = appUserService.getCustomerIdByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+        Vehicle vehicle = this.vehicleRepository.getById(id);
+        if (vehicle.getOwner().getCustomerId() != ownerId) {
+            return new ErrorResult(Messages.NOT_AUTHORIZED_ACTION);
+        }
+        if(vehicle.isPublished() == false){
+            return new ErrorResult(Messages.UNPUBLISHED_ALREADY);
+        }
+        vehicle.setPublished(false);
+        return new SuccessResult(Messages.UNPUBLISH_VEHICLE);
     }
 }
