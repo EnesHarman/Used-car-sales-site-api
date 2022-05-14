@@ -10,4 +10,5 @@ public interface Messages {
     String COMMENT_ADDED = "Your comment has been added.";
     String COMMENT_DELETED = "Your comment has been deleted successfully.";
     String COMMENT_NOT_FOUND = "There is no comment with that id. Please try again later.";
+    String VEHICLE_PUBLISHED = "The vehicle published successfully.";
 }

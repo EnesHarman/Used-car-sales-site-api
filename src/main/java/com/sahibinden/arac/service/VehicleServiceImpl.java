@@ -116,4 +116,25 @@ public class VehicleServiceImpl implements VehicleService {
         this.vehicleRepository.save(vehicle);
         return new SuccessResult(Messages.VEHICLE_UPDATED);
     }
+
+    @Override
+    @Transactional
+    public Result publishVehicle(long id) {
+        Vehicle vehicle = this.vehicleRepository.getById(id);
+        vehicle.setPublished(true);
+        this.vehicleRepository.save(vehicle);
+        return new SuccessResult(Messages.VEHICLE_PUBLISHED);
+    }
+
+    @Override
+    public DataResult<List<VehicleListResponse>> listUnPublishedVehicles(Optional<Integer> pageNum, Optional<Integer> pageSize) {
+        int pagenum = pageNum.isPresent() && pageNum.get() > 0 ? pageNum.get() : 1;
+        int pagesize = pageSize.isPresent() && pageSize.get() > 5 && pageSize.get() < 20 ? pageSize.get() : 10;
+        Pageable pageable = PageRequest.of(pagenum - 1, pagesize);
+        List<VehicleListResponse> vehicleList = this.vehicleRepository.listUnPublishedVehicles(pageable);
+        vehicleList.stream().forEach(vehicle -> {
+            vehicle.setPictures(this.pictureService.getVehiclePictures(vehicle.getVehicleId()).getData());
+        });
+        return new SuccessDataResult<List<VehicleListResponse>>(vehicleList);
+    }
 }

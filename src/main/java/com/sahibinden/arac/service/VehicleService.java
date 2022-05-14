@@ -11,8 +11,14 @@ import java.util.Optional;
 
 public interface VehicleService {
     Result addVehicle(VehicleAddRequest vehicleAddRequest);
+
     DataResult<List<VehicleListResponse>> listVehicles(Optional<Integer> pageNum, Optional<Integer> pageSize);
+
     DataResult<SingleVehicleListResponse> listSingleVehicle(Optional<Long> id);
 
     Result updateVehicle(Optional<Long> id, VehicleAddRequest vehicleUpdateRequest);
+
+    Result publishVehicle(long id);
+
+    DataResult<List<VehicleListResponse>> listUnPublishedVehicles(Optional<Integer> pagaNum, Optional<Integer> pageSize);
 }

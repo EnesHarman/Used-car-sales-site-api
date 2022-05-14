@@ -19,4 +19,9 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
             "v.vehicleModel,v.vehicleEngine,v.kilometer,v.fogLight,v.foldableMirror,v.parkingSensor,v.centralLocking," +
             "v.glassCelling,vt.vehicleTypeId,ft.fuelTypeId, v.vehiclePrice) from Vehicle v inner join v.type vt inner join v.fuelType ft where v.vehicleId=:id")
     SingleVehicleListResponse getSingleVehicle(long id);
+
+    @Query(value = "select new com.sahibinden.arac.dto.responses.VehicleListResponse(v.vehicleId,v.vehicleYear,v.vehicleBrand," +
+            "v.vehicleModel,v.vehicleEngine,v.kilometer,v.fogLight,v.foldableMirror,v.parkingSensor,v.centralLocking," +
+            "v.glassCelling,vt.vehicleTypeId,ft.fuelTypeId, v.vehiclePrice) from Vehicle v inner join v.type vt inner join v.fuelType ft where v.isPublished=false ")
+    List<VehicleListResponse> listUnPublishedVehicles(Pageable pageable);
 }
