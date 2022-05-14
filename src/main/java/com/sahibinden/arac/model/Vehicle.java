@@ -51,6 +51,9 @@ public class Vehicle {
     @Column(name = "price")
     private long vehiclePrice;
 
+    @Column(name = "isPublished")
+    private boolean isPublished;
+
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Customer owner;

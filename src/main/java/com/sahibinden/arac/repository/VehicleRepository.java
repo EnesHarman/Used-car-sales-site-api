@@ -12,7 +12,7 @@ import java.util.List;
 public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
     @Query(value = "select new com.sahibinden.arac.dto.responses.VehicleListResponse(v.vehicleId,v.vehicleYear,v.vehicleBrand," +
             "v.vehicleModel,v.vehicleEngine,v.kilometer,v.fogLight,v.foldableMirror,v.parkingSensor,v.centralLocking," +
-            "v.glassCelling,vt.vehicleTypeId,ft.fuelTypeId, v.vehiclePrice) from Vehicle v inner join v.type vt inner join v.fuelType ft")
+            "v.glassCelling,vt.vehicleTypeId,ft.fuelTypeId, v.vehiclePrice) from Vehicle v inner join v.type vt inner join v.fuelType ft where v.isPublished=true ")
     List<VehicleListResponse> listVehicles(Pageable pageable);
 
     @Query(value = "select new com.sahibinden.arac.dto.responses.SingleVehicleListResponse(v.vehicleId,v.vehicleYear,v.vehicleBrand," +

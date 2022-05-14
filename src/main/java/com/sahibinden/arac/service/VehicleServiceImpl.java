@@ -50,6 +50,7 @@ public class VehicleServiceImpl implements VehicleService {
                 .fuelType(new FuelType(vehicleAddRequest.getFuelTypeId()))
                 .owner(customer)
                 .vehiclePrice(vehicleAddRequest.getPrice())
+                .isPublished(false)
                 .build();
         this.vehicleRepository.save(vehicle);
 
@@ -110,6 +111,7 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setType(new VehicleType(vehicleUpdateRequest.getTypeId()));
         vehicle.setFuelType(new FuelType(vehicleUpdateRequest.getFuelTypeId()));
         vehicle.setVehiclePrice(vehicleUpdateRequest.getPrice());
+        vehicle.setPublished(false);
 
         this.vehicleRepository.save(vehicle);
         return new SuccessResult(Messages.VEHICLE_UPDATED);
