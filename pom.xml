@@ -78,6 +78,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
+					<finalName>used_vehicle-0.0.1</finalName>
 					<excludes>
 						<exclude>
 							<groupId>org.projectlombok</groupId>
