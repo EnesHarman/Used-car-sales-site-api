@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PictureRepository extends JpaRepository<Picture,Long> {
     List<Picture> findAllByVehicle_VehicleId(long vehicleId);
+    void deleteAllByVehicle_VehicleId(long id);
 }

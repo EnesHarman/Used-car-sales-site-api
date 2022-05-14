@@ -26,4 +26,6 @@ public interface VehicleService {
     Result unPublishVehicle(long id);
 
     DataResult<CompareVehiclesResponse> compareVehicles(Optional<Long> vehicleIOneId, Optional<Long> vehicleTwoId);
+
+    Result deleteVehicle(long id);
 }

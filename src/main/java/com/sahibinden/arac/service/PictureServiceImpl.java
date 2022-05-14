@@ -40,4 +40,9 @@ public class PictureServiceImpl implements PictureService{
         this.pictureRepository.saveAll(pictures);
         return new SuccessResult();
     }
+
+    @Override
+    public void deleteVehiclePictures(long id) {
+        this.pictureRepository.deleteAllByVehicle_VehicleId(id);
+    }
 }
