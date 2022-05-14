@@ -48,6 +48,9 @@ public class Vehicle {
     @Column(name = "glass_celling")
     private boolean glassCelling;
 
+    @Column(name = "price")
+    private long vehiclePrice;
+
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Customer owner;

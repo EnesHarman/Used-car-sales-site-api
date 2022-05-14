@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,9 +40,12 @@ public class SingleVehicleListResponse {
     private long typeId;
 
     private long fuelTypeId;
+
     private List<Comment> comments;
 
-    public SingleVehicleListResponse(long vehicleId, LocalDate vehicleYear, String vehicleBrand, String vehicleModel, String vehicleEngine, int kilometer, boolean fogLight, boolean foldableMirror, boolean parkingSensor, boolean centralLocking, boolean glassCelling, long typeId, long fuelTypeId) {
+    private long price;
+
+    public SingleVehicleListResponse(long vehicleId, LocalDate vehicleYear, String vehicleBrand, String vehicleModel, String vehicleEngine, int kilometer, boolean fogLight, boolean foldableMirror, boolean parkingSensor, boolean centralLocking, boolean glassCelling, long typeId, long fuelTypeId, long price) {
         this.vehicleId = vehicleId;
         this.vehicleYear = vehicleYear;
         this.vehicleBrand = vehicleBrand;
@@ -55,5 +59,6 @@ public class SingleVehicleListResponse {
         this.glassCelling = glassCelling;
         this.typeId = typeId;
         this.fuelTypeId = fuelTypeId;
+        this.price = price;
     }
 }
