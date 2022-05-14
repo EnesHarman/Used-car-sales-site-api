@@ -2,6 +2,7 @@ package com.sahibinden.arac.service;
 
 import com.sahibinden.arac.core.result.*;
 import com.sahibinden.arac.dto.requests.VehicleAddRequest;
+import com.sahibinden.arac.dto.responses.CompareVehiclesResponse;
 import com.sahibinden.arac.dto.responses.SingleVehicleListResponse;
 import com.sahibinden.arac.dto.responses.VehicleListResponse;
 import com.sahibinden.arac.model.*;
@@ -121,7 +122,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Transactional
     public Result publishVehicle(long id) {
         Vehicle vehicle = this.vehicleRepository.getById(id);
-        if(vehicle.isPublished()){
+        if (vehicle.isPublished()) {
             return new ErrorResult(Messages.PUBLISHED_ALREADY);
         }
         vehicle.setPublished(true);
@@ -150,10 +151,24 @@ public class VehicleServiceImpl implements VehicleService {
         if (vehicle.getOwner().getCustomerId() != ownerId) {
             return new ErrorResult(Messages.NOT_AUTHORIZED_ACTION);
         }
-        if(vehicle.isPublished() == false){
+        if (vehicle.isPublished() == false) {
             return new ErrorResult(Messages.UNPUBLISHED_ALREADY);
         }
         vehicle.setPublished(false);
         return new SuccessResult(Messages.UNPUBLISH_VEHICLE);
+    }
+
+    @Override
+    @Transactional
+    public DataResult<CompareVehiclesResponse> compareVehicles(Optional<Long> vehicleIOneId, Optional<Long> vehicleTwoId) {
+        if (!vehicleIOneId.isPresent() || !vehicleTwoId.isPresent()) {
+            return new ErrorDataResult<>(Messages.VEHICLE_COMPARE_ERROR);
+        }
+        return new SuccessDataResult<>(
+                new CompareVehiclesResponse(
+                        this.vehicleRepository.getSingleVehicle(vehicleIOneId.get()),
+                        this.vehicleRepository.getSingleVehicle(vehicleTwoId.get())
+                )
+        );
     }
 }

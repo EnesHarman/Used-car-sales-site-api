@@ -3,6 +3,7 @@ package com.sahibinden.arac.controller;
 import com.sahibinden.arac.core.result.DataResult;
 import com.sahibinden.arac.core.result.Result;
 import com.sahibinden.arac.dto.requests.VehicleAddRequest;
+import com.sahibinden.arac.dto.responses.CompareVehiclesResponse;
 import com.sahibinden.arac.dto.responses.SingleVehicleListResponse;
 import com.sahibinden.arac.dto.responses.VehicleListResponse;
 import com.sahibinden.arac.service.VehicleService;
@@ -75,13 +76,22 @@ public class VehicleController {
         return ResponseEntity.internalServerError().body(result.getMessage());
     }
 
-    @GetMapping("unpublished/list")
+    @GetMapping("/unpublished/list")
     public ResponseEntity<Object> listUnPublishedVehicles(@RequestParam Optional<Integer> pagaNum, Optional<Integer> pageSize) {
         DataResult<List<VehicleListResponse>> result = this.vehicleService.listUnPublishedVehicles(pagaNum, pageSize);
         if (result.getSuccess()) {
             return ResponseEntity.ok(result.getData());
         }
         return ResponseEntity.internalServerError().body(result.getMessage());
+    }
+
+    @GetMapping("/compare")
+    public ResponseEntity<Object> compareVehicles(@RequestParam Optional<Long> vehicleIOneId, @RequestParam Optional<Long> vehicleTwoId){
+        DataResult<CompareVehiclesResponse> result = this.vehicleService.compareVehicles(vehicleIOneId,vehicleTwoId);
+        if (result.getSuccess()) {
+            return ResponseEntity.ok(result.getData());
+        }
+        return ResponseEntity.badRequest().body(result.getMessage());
     }
 
 

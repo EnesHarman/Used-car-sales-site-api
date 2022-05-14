@@ -1,5 +1,7 @@
 package com.sahibinden.arac.service.constants;
 
+import com.sahibinden.arac.dto.responses.CompareVehiclesResponse;
+
 public interface Messages {
      String CUSTOMER_REGISTERED= "You have been successfully registered.";
     String ROLE_ADDED = "The role has been added to the service successfully.";
@@ -14,4 +16,5 @@ public interface Messages {
     String UNPUBLISHED_ALREADY = "Your vehicle is not published.";
     String UNPUBLISH_VEHICLE = "Your vehicle is unpublished now.";
     String PUBLISHED_ALREADY = "The vehicle has been already published.";
+    String VEHICLE_COMPARE_ERROR = "Please provide 2 vehicle to compare.";
 }

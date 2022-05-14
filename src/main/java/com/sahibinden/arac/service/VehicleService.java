@@ -3,6 +3,7 @@ package com.sahibinden.arac.service;
 import com.sahibinden.arac.core.result.DataResult;
 import com.sahibinden.arac.core.result.Result;
 import com.sahibinden.arac.dto.requests.VehicleAddRequest;
+import com.sahibinden.arac.dto.responses.CompareVehiclesResponse;
 import com.sahibinden.arac.dto.responses.SingleVehicleListResponse;
 import com.sahibinden.arac.dto.responses.VehicleListResponse;
 
@@ -23,4 +24,6 @@ public interface VehicleService {
     DataResult<List<VehicleListResponse>> listUnPublishedVehicles(Optional<Integer> pagaNum, Optional<Integer> pageSize);
 
     Result unPublishVehicle(long id);
+
+    DataResult<CompareVehiclesResponse> compareVehicles(Optional<Long> vehicleIOneId, Optional<Long> vehicleTwoId);
 }
