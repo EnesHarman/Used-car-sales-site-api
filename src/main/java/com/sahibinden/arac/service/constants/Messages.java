@@ -17,4 +17,6 @@ public interface Messages {
     String UNPUBLISH_VEHICLE = "Your vehicle is unpublished now.";
     String PUBLISHED_ALREADY = "The vehicle has been already published.";
     String VEHICLE_COMPARE_ERROR = "Please provide 2 vehicle to compare.";
+    String FUEL_TYPE_ADDED = "The fuel type has been added successfully.";
+    String FUEL_TYPE_DELETED = "The fuel type has been deleted successfully.";
 }
