@@ -36,4 +36,6 @@ public class VehicleAddRequest {
     private long typeId;
 
     private long fuelTypeId;
+
+    private long price;
 }

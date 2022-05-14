@@ -49,6 +49,7 @@ public class VehicleServiceImpl implements VehicleService {
                 .type(new VehicleType(vehicleAddRequest.getTypeId()))
                 .fuelType(new FuelType(vehicleAddRequest.getFuelTypeId()))
                 .owner(customer)
+                .vehiclePrice(vehicleAddRequest.getPrice())
                 .build();
         this.vehicleRepository.save(vehicle);
 
@@ -93,6 +94,7 @@ public class VehicleServiceImpl implements VehicleService {
         if (vehicle.getOwner().getCustomerId() != ownerId) {
             return new ErrorResult(Messages.NOT_AUTHORIZED_ACTION);
         }
+
         this.pictureService.updateVehiclePictures(vehicle.getVehicleId(), vehicleUpdateRequest.getPictures());
 
         vehicle.setVehicleBrand(vehicleUpdateRequest.getVehicleBrand());
@@ -107,6 +109,7 @@ public class VehicleServiceImpl implements VehicleService {
         vehicle.setGlassCelling(vehicleUpdateRequest.isGlassCelling());
         vehicle.setType(new VehicleType(vehicleUpdateRequest.getTypeId()));
         vehicle.setFuelType(new FuelType(vehicleUpdateRequest.getFuelTypeId()));
+        vehicle.setVehiclePrice(vehicleUpdateRequest.getPrice());
 
         this.vehicleRepository.save(vehicle);
         return new SuccessResult(Messages.VEHICLE_UPDATED);

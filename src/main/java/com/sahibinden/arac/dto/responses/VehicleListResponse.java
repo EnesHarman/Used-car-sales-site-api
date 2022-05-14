@@ -40,7 +40,9 @@ public class VehicleListResponse {
 
     private long fuelTypeId;
 
-    public VehicleListResponse(long vehicleId, LocalDate vehicleYear, String vehicleBrand, String vehicleModel, String vehicleEngine, int kilometer, boolean fogLight, boolean foldableMirror, boolean parkingSensor, boolean centralLocking, boolean glassCelling, long typeId, long fuelTypeId) {
+    private long price;
+
+    public VehicleListResponse(long vehicleId, LocalDate vehicleYear, String vehicleBrand, String vehicleModel, String vehicleEngine, int kilometer, boolean fogLight, boolean foldableMirror, boolean parkingSensor, boolean centralLocking, boolean glassCelling, long typeId, long fuelTypeId, long price) {
         this.vehicleId = vehicleId;
         this.vehicleYear = vehicleYear;
         this.vehicleBrand = vehicleBrand;
@@ -54,5 +56,6 @@ public class VehicleListResponse {
         this.glassCelling = glassCelling;
         this.typeId = typeId;
         this.fuelTypeId = fuelTypeId;
+        this.price =   price;
     }
 }
