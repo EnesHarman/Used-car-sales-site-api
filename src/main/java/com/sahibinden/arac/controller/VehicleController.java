@@ -22,37 +22,55 @@ public class VehicleController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<String> addVehicle(@RequestBody VehicleAddRequest vehicleAddRequest){
+    public ResponseEntity<String> addVehicle(@RequestBody VehicleAddRequest vehicleAddRequest) {
         Result result = this.vehicleService.addVehicle(vehicleAddRequest);
-        if(result.getSuccess()){
+        if (result.getSuccess()) {
             return ResponseEntity.ok(result.getMessage());
         }
         return ResponseEntity.badRequest().body(result.getMessage());
     }
 
     @GetMapping("/list")
-    public ResponseEntity<Object> listVehicle(@PathVariable Optional<Long> id, @RequestParam Optional<Integer> pagaNum, Optional<Integer> pageSize){
-        System.out.println(id);
-        DataResult<List<VehicleListResponse>> result = this.vehicleService.listVehicles(pagaNum,pageSize);
-        if(result.getSuccess()){
+    public ResponseEntity<Object> listVehicle(@PathVariable Optional<Long> id, @RequestParam Optional<Integer> pagaNum, Optional<Integer> pageSize) {
+        DataResult<List<VehicleListResponse>> result = this.vehicleService.listVehicles(pagaNum, pageSize);
+        if (result.getSuccess()) {
             return ResponseEntity.ok(result.getData());
         }
         return ResponseEntity.internalServerError().body(result.getMessage());
     }
+
     @GetMapping("/list/{id}")
-    public ResponseEntity<Object> listSingleVehicle(@PathVariable Optional<Long> id){
+    public ResponseEntity<Object> listSingleVehicle(@PathVariable Optional<Long> id) {
         DataResult<SingleVehicleListResponse> result = this.vehicleService.listSingleVehicle(id);
-        if(result.getSuccess()){
+        if (result.getSuccess()) {
             return ResponseEntity.ok(result.getData());
         }
         return ResponseEntity.internalServerError().body(result.getMessage());
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> updateVehicle(@PathVariable Optional<Long> id,  @RequestBody VehicleAddRequest vehicleUpdateRequest){
+    public ResponseEntity<String> updateVehicle(@PathVariable Optional<Long> id, @RequestBody VehicleAddRequest vehicleUpdateRequest) {
         Result result = this.vehicleService.updateVehicle(id, vehicleUpdateRequest);
-        if(result.getSuccess()){
+        if (result.getSuccess()) {
             return ResponseEntity.ok(result.getMessage());
+        }
+        return ResponseEntity.internalServerError().body(result.getMessage());
+    }
+
+    @PutMapping("/publish/{id}")
+    public ResponseEntity<String> publishVehicle(@PathVariable long id) {
+        Result result = this.vehicleService.publishVehicle(id);
+        if (result.getSuccess()) {
+            return ResponseEntity.ok(result.getMessage());
+        }
+        return ResponseEntity.internalServerError().body(result.getMessage());
+    }
+
+    @GetMapping("unpublished/list")
+    public ResponseEntity<Object> listUnPublishedVehicles(@RequestParam Optional<Integer> pagaNum, Optional<Integer> pageSize) {
+        DataResult<List<VehicleListResponse>> result = this.vehicleService.listUnPublishedVehicles(pagaNum, pageSize);
+        if (result.getSuccess()) {
+            return ResponseEntity.ok(result.getData());
         }
         return ResponseEntity.internalServerError().body(result.getMessage());
     }
