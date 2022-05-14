@@ -11,4 +11,7 @@ public interface Messages {
     String COMMENT_DELETED = "Your comment has been deleted successfully.";
     String COMMENT_NOT_FOUND = "There is no comment with that id. Please try again later.";
     String VEHICLE_PUBLISHED = "The vehicle published successfully.";
+    String UNPUBLISHED_ALREADY = "Your vehicle is not published.";
+    String UNPUBLISH_VEHICLE = "Your vehicle is unpublished now.";
+    String PUBLISHED_ALREADY = "The vehicle has been already published.";
 }

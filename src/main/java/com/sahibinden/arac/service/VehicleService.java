@@ -21,4 +21,6 @@ public interface VehicleService {
     Result publishVehicle(long id);
 
     DataResult<List<VehicleListResponse>> listUnPublishedVehicles(Optional<Integer> pagaNum, Optional<Integer> pageSize);
+
+    Result unPublishVehicle(long id);
 }
