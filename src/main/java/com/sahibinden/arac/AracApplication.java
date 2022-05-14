@@ -1,12 +1,8 @@
 package com.sahibinden.arac;
 
-import com.sahibinden.arac.model.FuelType;
-import com.sahibinden.arac.model.Role;
-import com.sahibinden.arac.model.VehicleType;
-import com.sahibinden.arac.service.FuelTypeService;
-import com.sahibinden.arac.service.PictureService;
-import com.sahibinden.arac.service.RoleService;
-import com.sahibinden.arac.service.VehicleTypeService;
+import com.sahibinden.arac.model.*;
+import com.sahibinden.arac.service.*;
+import com.sahibinden.arac.service.constants.DBConstants;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,11 +36,30 @@ public class AracApplication {
     }
 
     @Bean
-    CommandLineRunner run(RoleService roleService, FuelTypeService fuelTypeService, VehicleTypeService vehicleTypeService) {
+    CommandLineRunner run(RoleService roleService, FuelTypeService fuelTypeService, VehicleTypeService vehicleTypeService, ManagerService managerService, AppUserService appUserService) {
+        Role role = Role.builder()
+                .roleId(DBConstants.DB_ROLE_MANAGER_ID)
+                .build();
+
+        AppUser appUser = AppUser.builder()
+                .appUserEmail("testmanager@gmail.com")
+                .appUserPassword("123456")
+                .appUserName("Test")
+                .appUserSurname("Manager")
+                .role(role)
+                .build();
+
+        Manager manager = Manager.builder()
+                .managerIdentityNumber("12345678900")
+                .user(appUser)
+                .build();
+
         return args -> {
-            roleService.addRole(new Role(1, "ROLE_ADMIN"));
             roleService.addRole(new Role(2, "ROLE_MANAGER"));
             roleService.addRole(new Role(3, "ROLE_CUSTOMER"));
+
+            appUserService.saveAppUser(appUser);
+            managerService.saveManager(manager);
 
             fuelTypeService.addFuelType(new FuelType(1, "DIESEL"));
 
