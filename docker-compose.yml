@@ -1,0 +1,40 @@
+version: '3.7'
+services:
+  backend:
+    depends_on:
+      - test-mysql
+    build: .
+    image: spring-boot-backed-app
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://test-mysql:3306/used_vehicle
+      SPRING_DATASOURCE_USERNAME: enes
+      SPRING_DATASOURCE_PASSWORD: 1999
+    networks:
+      - common-network
+
+  test-mysql:
+    image: mysql
+    restart: always
+    ports:
+      - "3307:3306"
+#    volumes:
+#      - db_data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: used_vehicle
+      MYSQL_USER: enes
+      MYSQL_PASSWORD: 1999
+      MYSQL_ROOT_PASSWORD: root
+    networks:
+      - common-network
+
+networks:
+  common-network:
+    driver: bridge
+
+  #Volumes
+#volumes:
+#  db_data:
+#    driver: local
