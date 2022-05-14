@@ -22,7 +22,7 @@ public class FuelType {
     @Column(name = "id")
     private long fuelTypeId;
 
-    @Column(name = "name", columnDefinition = "varchar(30)")
+    @Column(name = "name", columnDefinition = "varchar(30)", unique = true)
     private String fuelTypeName;
 
     @OneToMany(mappedBy = "fuelType")
@@ -30,6 +30,10 @@ public class FuelType {
 
     public FuelType(long fuelTypeId) {
         this.fuelTypeId = fuelTypeId;
+    }
+
+    public FuelType(String fuelTypeName) {
+        this.fuelTypeName = fuelTypeName;
     }
 
     public FuelType(long fuelTypeId, String fuelTypeName) {
