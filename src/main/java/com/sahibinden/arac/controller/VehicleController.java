@@ -3,6 +3,7 @@ package com.sahibinden.arac.controller;
 import com.sahibinden.arac.core.result.DataResult;
 import com.sahibinden.arac.core.result.Result;
 import com.sahibinden.arac.dto.requests.VehicleAddRequest;
+import com.sahibinden.arac.dto.responses.SingleVehicleListResponse;
 import com.sahibinden.arac.dto.responses.VehicleListResponse;
 import com.sahibinden.arac.service.VehicleService;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class VehicleController {
     }
     @GetMapping("/list/{id}")
     public ResponseEntity<Object> listSingleVehicle(@PathVariable Optional<Long> id){
-        DataResult<VehicleListResponse> result = this.vehicleService.listSingleVehicle(id);
+        DataResult<SingleVehicleListResponse> result = this.vehicleService.listSingleVehicle(id);
         if(result.getSuccess()){
             return ResponseEntity.ok(result.getData());
         }

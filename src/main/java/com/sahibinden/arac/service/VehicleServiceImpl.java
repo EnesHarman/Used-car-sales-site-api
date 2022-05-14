@@ -2,6 +2,7 @@ package com.sahibinden.arac.service;
 
 import com.sahibinden.arac.core.result.*;
 import com.sahibinden.arac.dto.requests.VehicleAddRequest;
+import com.sahibinden.arac.dto.responses.SingleVehicleListResponse;
 import com.sahibinden.arac.dto.responses.VehicleListResponse;
 import com.sahibinden.arac.model.*;
 import com.sahibinden.arac.repository.VehicleRepository;
@@ -21,16 +22,18 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
     private AppUserService appUserService;
     private PictureService pictureService;
+    private CommentService commentService;
 
-    public VehicleServiceImpl(VehicleRepository vehicleRepository, AppUserService appUserService, PictureService pictureService) {
+    public VehicleServiceImpl(VehicleRepository vehicleRepository, AppUserService appUserService, PictureService pictureService, CommentService commentService) {
         this.vehicleRepository = vehicleRepository;
         this.appUserService = appUserService;
         this.pictureService = pictureService;
+        this.commentService = commentService;
     }
 
     @Override
     public Result addVehicle(VehicleAddRequest vehicleAddRequest) {
-        long ownerId = appUserService.getAppUserIdByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        long ownerId = appUserService.getCustomerIdByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
         Customer customer = new Customer(ownerId);
 
         Vehicle vehicle = Vehicle.builder()
@@ -68,12 +71,13 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     @Override
-    public DataResult<VehicleListResponse> listSingleVehicle(Optional<Long> id) {
+    public DataResult<SingleVehicleListResponse> listSingleVehicle(Optional<Long> id) {
         if (!id.isPresent()) {
             return new ErrorDataResult<>(Messages.VEHICLE_NOT_FOUND);
         }
-        VehicleListResponse vehicle = this.vehicleRepository.getSingleVehicle(id.get());
+        SingleVehicleListResponse vehicle = this.vehicleRepository.getSingleVehicle(id.get());
         vehicle.setPictures(this.pictureService.getVehiclePictures(id.get()).getData());
+        vehicle.setComments(this.commentService.getVehicleComments(id.get()).getData());
         return new SuccessDataResult<>(vehicle);
     }
 
@@ -83,7 +87,7 @@ public class VehicleServiceImpl implements VehicleService {
         if (!id.isPresent()) {
             return new ErrorResult(Messages.VEHICLE_NOT_FOUND);
         }
-        long ownerId = appUserService.getAppUserIdByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+        long ownerId = appUserService.getCustomerIdByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
 
         Vehicle vehicle = this.vehicleRepository.getById(id.get());
         if (vehicle.getOwner().getCustomerId() != ownerId) {
