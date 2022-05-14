@@ -32,6 +32,10 @@ public class VehicleType {
         this.vehicleTypeId = vehicleTypeId;
     }
 
+    public VehicleType(String vehicleTypeName) {
+        this.vehicleTypeName = vehicleTypeName;
+    }
+
     public VehicleType(long vehicleTypeId, String vehicleTypeName) {
         this.vehicleTypeId = vehicleTypeId;
         this.vehicleTypeName = vehicleTypeName;

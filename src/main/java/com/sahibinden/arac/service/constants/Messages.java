@@ -19,4 +19,6 @@ public interface Messages {
     String VEHICLE_COMPARE_ERROR = "Please provide 2 vehicle to compare.";
     String FUEL_TYPE_ADDED = "The fuel type has been added successfully.";
     String FUEL_TYPE_DELETED = "The fuel type has been deleted successfully.";
+    String VEHICLE_TYPE_DELETED = "The vehicle type has been deleted successfully.";
+    String VEHICLE_TYPE_ADDED = "The vehicle type has been added successfully.";
 }

@@ -67,6 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/vehicle/list").permitAll();
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/fueltype/add/**").hasAuthority("ROLE_MANAGER");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/fueltype/delete/**").hasAuthority("ROLE_MANAGER");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/vehicletype/add/**").hasAuthority("ROLE_MANAGER");
+        http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/vehicletype/delete/**").hasAuthority("ROLE_MANAGER");
 
         http.authorizeRequests()
                 .antMatchers(
