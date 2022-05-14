@@ -171,4 +171,19 @@ public class VehicleServiceImpl implements VehicleService {
                 )
         );
     }
+
+    @Override
+    @Transactional
+    public Result deleteVehicle(long id) {
+        long ownerId = appUserService.getCustomerIdByEmail(SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString());
+
+        Vehicle vehicle = this.vehicleRepository.getById(id);
+        if (vehicle.getOwner().getCustomerId() != ownerId) {
+            return new ErrorResult(Messages.NOT_AUTHORIZED_ACTION);
+        }
+        this.commentService.deleteVehicleComments(id);
+        this.pictureService.deleteVehiclePictures(id);
+        this.vehicleRepository.delete(vehicle);
+        return new SuccessResult(Messages.VEHICLE_DELETED);
+    }
 }

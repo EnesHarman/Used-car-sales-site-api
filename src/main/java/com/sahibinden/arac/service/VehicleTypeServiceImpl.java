@@ -25,7 +25,7 @@ public class VehicleTypeServiceImpl implements VehicleTypeService {
     @Override
     public Result addVehicleType(VehicleType vehicleType) {
         this.vehicleTypeRepository.save(vehicleType);
-        return new SuccessResult(Messages.VEHICLE_ADDED);
+        return new SuccessResult(Messages.VEHICLE_TYPE_ADDED);
     }
 
     @Override

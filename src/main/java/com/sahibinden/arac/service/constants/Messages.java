@@ -21,4 +21,5 @@ public interface Messages {
     String FUEL_TYPE_DELETED = "The fuel type has been deleted successfully.";
     String VEHICLE_TYPE_DELETED = "The vehicle type has been deleted successfully.";
     String VEHICLE_TYPE_ADDED = "The vehicle type has been added successfully.";
+    String VEHICLE_DELETED = "The vehicle has been deleted successfully.";
 }

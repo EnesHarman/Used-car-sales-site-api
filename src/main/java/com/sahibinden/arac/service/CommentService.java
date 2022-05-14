@@ -14,4 +14,6 @@ public interface CommentService {
     DataResult<List<Comment>> getVehicleComments(long id);
 
     Result deleteComment(long commentId);
+
+    void deleteVehicleComments(long id);
 }

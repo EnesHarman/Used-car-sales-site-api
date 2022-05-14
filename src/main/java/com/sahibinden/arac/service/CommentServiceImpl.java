@@ -55,4 +55,10 @@ public class CommentServiceImpl implements CommentService{
         }
         return new SuccessResult(Messages.COMMENT_DELETED);
     }
+
+    @Override
+    @Transactional
+    public void deleteVehicleComments(long id) {
+        this.commentRepository.deleteAllByVehicle_VehicleId(id);
+    }
 }

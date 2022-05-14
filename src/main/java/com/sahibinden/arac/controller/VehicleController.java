@@ -94,5 +94,14 @@ public class VehicleController {
         return ResponseEntity.badRequest().body(result.getMessage());
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable long id){
+        Result result = this.vehicleService.deleteVehicle(id);
+        if(result.getSuccess()){
+            return ResponseEntity.ok(result.getMessage());
+        }
+        return ResponseEntity.badRequest().body(result.getMessage());
+    }
+
 
 }
