@@ -1,5 +1,6 @@
 package com.sahibinden.arac.repository;
 
+import com.sahibinden.arac.dto.responses.SingleVehicleListResponse;
 import com.sahibinden.arac.dto.responses.VehicleListResponse;
 import com.sahibinden.arac.model.Vehicle;
 import org.springframework.data.domain.Pageable;
@@ -14,8 +15,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
             "v.glassCelling,vt.vehicleTypeId,ft.fuelTypeId) from Vehicle v inner join v.type vt inner join v.fuelType ft")
     List<VehicleListResponse> listVehicles(Pageable pageable);
 
-    @Query(value = "select new com.sahibinden.arac.dto.responses.VehicleListResponse(v.vehicleId,v.vehicleYear,v.vehicleBrand," +
+    @Query(value = "select new com.sahibinden.arac.dto.responses.SingleVehicleListResponse(v.vehicleId,v.vehicleYear,v.vehicleBrand," +
             "v.vehicleModel,v.vehicleEngine,v.kilometer,v.fogLight,v.foldableMirror,v.parkingSensor,v.centralLocking," +
             "v.glassCelling,vt.vehicleTypeId,ft.fuelTypeId) from Vehicle v inner join v.type vt inner join v.fuelType ft where v.vehicleId=:id")
-    VehicleListResponse getSingleVehicle(long id);
+    SingleVehicleListResponse getSingleVehicle(long id);
 }
